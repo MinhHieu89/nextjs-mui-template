@@ -1,29 +1,24 @@
-import {
-	Divider,
-	Drawer,
-	IconButton,
-	List,
-	ListItemButton,
-	ListItemIcon,
-	ListItemText,
-	Toolbar,
-} from '@mui/material';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import { Avatar, Box, Drawer, List, Toolbar, Typography } from '@mui/material';
 import DashboardIcon from '@mui/icons-material/Dashboard';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import PeopleIcon from '@mui/icons-material/People';
-import BarChartIcon from '@mui/icons-material/BarChart';
-import LayersIcon from '@mui/icons-material/Layers';
+import AssessmentIcon from '@mui/icons-material/Assessment';
+import InsightsIcon from '@mui/icons-material/Insights';
+import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
+import PersonIcon from '@mui/icons-material/Person';
 import { useState } from 'react';
+import { useRouter } from 'next/router';
+
+import { Link } from '../link';
+import NavItem from './NavItem';
+import NavSectionHeader from './NavSectionHeader';
+import ProfileSection from './ProfileSection';
 
 interface SidebarProps {}
 
-const sidebarMinWidth = 50;
 const sidebarMaxWidth = 250;
 
 const Sidebar = (props: SidebarProps) => {
 	const [isOpen, setIsOpen] = useState(true);
+	const { pathname } = useRouter();
 
 	const toggleDrawer = () => {
 		setIsOpen((prev) => !prev);
@@ -34,59 +29,73 @@ const Sidebar = (props: SidebarProps) => {
 			variant="permanent"
 			open={isOpen}
 			sx={{
-				width: isOpen ? sidebarMaxWidth : sidebarMinWidth,
+				display: { xs: 'none', lg: 'block' },
+				width: sidebarMaxWidth,
 				height: '100vh',
 				'& > div': {
-					borderRight: 'none',
 					width: 'inherit',
 				},
 			}}
 		>
-			<Toolbar
+			<Box
 				sx={{
-					display: 'flex',
-					alignItems: 'center',
-					justifyContent: 'flex-end',
-					px: [1],
+					p: 2,
 				}}
 			>
-				<IconButton onClick={toggleDrawer}>
-					{isOpen ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-				</IconButton>
-			</Toolbar>
-			<Divider />
-			<List component="nav">
-				<ListItemButton>
-					<ListItemIcon>
-						<DashboardIcon />
-					</ListItemIcon>
-					<ListItemText primary="Dashboard" />
-				</ListItemButton>
-				<ListItemButton>
-					<ListItemIcon>
-						<ShoppingCartIcon />
-					</ListItemIcon>
-					<ListItemText primary="Orders" />
-				</ListItemButton>
-				<ListItemButton>
-					<ListItemIcon>
-						<PeopleIcon />
-					</ListItemIcon>
-					<ListItemText primary="CustomersTest" />
-				</ListItemButton>
-				<ListItemButton>
-					<ListItemIcon>
-						<BarChartIcon />
-					</ListItemIcon>
-					<ListItemText primary="Reports" />
-				</ListItemButton>
-				<ListItemButton>
-					<ListItemIcon>
-						<LayersIcon />
-					</ListItemIcon>
-					<ListItemText primary="Integrations" />
-				</ListItemButton>
-			</List>
+				<Toolbar
+					sx={{
+						alignItems: 'center',
+						display: 'flex',
+						justifyContent: 'space-between',
+						px: [2],
+					}}
+				>
+					<Link href="/">MyApp</Link>
+				</Toolbar>
+				<Box sx={{ mb: 2 }}>
+					<Link href="/profile">
+						<ProfileSection />
+					</Link>
+				</Box>
+				<List component="nav">
+					<Box>
+						<NavSectionHeader title="General" />
+						<NavItem
+							to="/"
+							text="Dashboard"
+							isActive={pathname === '/'}
+							icon={<DashboardIcon />}
+						/>
+						<NavItem
+							to="/analytics"
+							text="Analytics"
+							isActive={pathname === '/analytics'}
+							icon={<InsightsIcon />}
+						/>
+						<NavItem
+							to="/banking"
+							text="Banking"
+							isActive={pathname === '/banking'}
+							icon={<AccountBalanceIcon />}
+						/>
+						<NavItem
+							to="/reports"
+							text="Reports"
+							isActive={pathname === '/reports'}
+							icon={<AssessmentIcon />}
+						/>
+					</Box>
+					<Box sx={{ mt: 3 }}>
+						<NavSectionHeader title="Management" />
+						<NavItem
+							to="/users"
+							text="Users"
+							isActive={pathname === '/users'}
+							icon={<PersonIcon />}
+						/>
+					</Box>
+				</List>
+			</Box>
 		</Drawer>
 	);
 };
