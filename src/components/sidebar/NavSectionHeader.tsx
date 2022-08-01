@@ -11,6 +11,7 @@ const NavSectionHeader = ({ title }: NavSectionTitleProps) => {
 			sx={{
 				ml: 2,
 				mb: 2,
+				color: 'rgb(107, 114, 128)',
 				textTransform: 'uppercase',
 				fontSize: '0.8rem',
 				fontWeight: 'bold',

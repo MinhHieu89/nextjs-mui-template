@@ -1,28 +1,46 @@
-import { Box } from '@mui/material';
-import React from 'react';
+import { Box, styled } from '@mui/material';
+import React, { useState } from 'react';
 import { Navbar } from '../navbar';
 import { Sidebar } from '../sidebar';
+
+const AppLayoutRoot = styled('div')(({ theme }) => ({
+	display: 'flex',
+	flex: '1 1 auto',
+	maxWidth: '100%',
+	paddingTop: 64,
+	[theme.breakpoints.up('lg')]: {
+		paddingLeft: 280,
+	},
+}));
 
 interface AppLayoutProps {
 	children: React.ReactNode;
 }
 
 const AppLayout = ({ children }: AppLayoutProps) => {
+	const [isSidebarOpen, setSidebarOpen] = useState(true);
+
 	return (
-		<Box sx={{ display: 'flex' }}>
-			<Sidebar />
-			<Box sx={{ flex: 1, p: 0, width: 'max-content' }}>
-				<Navbar />
+		<>
+			<AppLayoutRoot>
 				<Box
 					sx={{
-						mt: 1,
-						mx: 2,
+						display: 'flex',
+						flex: '1 1 auto',
+						flexDirection: 'column',
+						width: '100%',
+						p: 3,
 					}}
 				>
 					{children}
 				</Box>
-			</Box>
-		</Box>
+			</AppLayoutRoot>
+			<Navbar onSidebarOpen={() => setSidebarOpen(true)} />
+			<Sidebar
+				isOpen={isSidebarOpen}
+				onClose={() => setSidebarOpen(false)}
+			/>
+		</>
 	);
 };
 

@@ -5,8 +5,8 @@ const ProfileSection = () => {
 	return (
 		<Box
 			sx={{
-				backgroundColor: grey[200],
-				borderRadius: 3,
+				backgroundColor: 'rgba(255, 255, 255, 0.04)',
+				borderRadius: 2,
 				display: 'flex',
 				alignItems: 'center',
 				p: 2,
@@ -22,6 +22,7 @@ const ProfileSection = () => {
 					sx={{
 						fontSize: 14,
 						fontWeight: 500,
+						color: 'grey.300',
 					}}
 				>
 					Henry Brown
@@ -29,7 +30,7 @@ const ProfileSection = () => {
 				<Typography
 					sx={{
 						fontSize: 14,
-						color: grey[700],
+						color: 'grey.500',
 					}}
 				>
 					admin

@@ -5,7 +5,6 @@ import {
 	Typography,
 } from '@mui/material';
 import React from 'react';
-import { grey } from '@mui/material/colors';
 import { Link } from '../link';
 
 interface NavItemProps {
@@ -20,15 +19,17 @@ const NavItem = ({ isActive, icon, text, to }: NavItemProps) => {
 		<Link href={to}>
 			<ListItemButton
 				sx={{
-					backgroundColor: isActive ? 'primary.main' : '',
-					borderRadius: 3,
+					borderRadius: 1,
 					mb: 0.5,
+					'&.Mui-selected, &.Mui-selected:hover, &:hover': {
+						backgroundColor: 'rgba(255, 255, 255, 0.08)',
+					},
 				}}
 				selected={isActive}
 			>
 				<ListItemIcon
 					sx={{
-						color: isActive ? 'primary.dark' : '',
+						color: isActive ? 'secondary.main' : 'grey.300',
 					}}
 				>
 					{icon}
@@ -37,7 +38,7 @@ const NavItem = ({ isActive, icon, text, to }: NavItemProps) => {
 					primary={
 						<Typography
 							sx={{
-								color: isActive ? 'primary.dark' : grey[600],
+								color: isActive ? 'secondary.main' : 'grey.300',
 								fontWeight: isActive ? 500 : 400,
 							}}
 						>

@@ -1,10 +1,18 @@
-import { Avatar, Box, Drawer, List, Toolbar, Typography } from '@mui/material';
+import {
+	Avatar,
+	Box,
+	Drawer,
+	List,
+	Toolbar,
+	Typography,
+	useMediaQuery,
+} from '@mui/material';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import AssessmentIcon from '@mui/icons-material/Assessment';
 import InsightsIcon from '@mui/icons-material/Insights';
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import PersonIcon from '@mui/icons-material/Person';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 
 import { Link } from '../link';
@@ -12,90 +20,151 @@ import NavItem from './NavItem';
 import NavSectionHeader from './NavSectionHeader';
 import ProfileSection from './ProfileSection';
 
-interface SidebarProps {}
+interface SidebarProps {
+	isOpen: boolean;
+	onClose: () => void;
+}
 
-const sidebarMaxWidth = 250;
+const sidebarMaxWidth = 280;
 
-const Sidebar = (props: SidebarProps) => {
-	const [isOpen, setIsOpen] = useState(true);
-	const { pathname } = useRouter();
+const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
+	const router = useRouter();
+	const { pathname } = router;
+	const lgUp = useMediaQuery((theme: any) => theme.breakpoints.up('lg'), {
+		defaultMatches: true,
+		noSsr: false,
+	});
 
-	const toggleDrawer = () => {
-		setIsOpen((prev) => !prev);
-	};
+	useEffect(
+		() => {
+			if (!router.isReady) {
+				return;
+			}
+
+			if (isOpen) {
+				onClose?.();
+			}
+		},
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+		[router.asPath]
+	);
+
+	const content = (
+		<Box
+			sx={{
+				p: 2,
+				color: '#ffffff',
+				backgroundColor: 'grey.900',
+				minHeight: '100vh',
+			}}
+		>
+			<Toolbar
+				sx={{
+					alignItems: 'center',
+					display: 'flex',
+					justifyContent: 'space-between',
+					px: [2],
+				}}
+			>
+				<Link sx={{ color: 'white' }} href="/">
+					AppLogoHere
+				</Link>
+			</Toolbar>
+			<Box sx={{ mb: 2 }}>
+				<Link href="/profile">
+					<ProfileSection />
+				</Link>
+			</Box>
+			<List component="nav">
+				<Box>
+					<NavSectionHeader title="General" />
+					<NavItem
+						to="/"
+						text="Dashboard"
+						isActive={pathname === '/'}
+						icon={<DashboardIcon />}
+					/>
+					<NavItem
+						to="/analytics"
+						text="Analytics"
+						isActive={pathname === '/analytics'}
+						icon={<InsightsIcon />}
+					/>
+					<NavItem
+						to="/banking"
+						text="Banking"
+						isActive={pathname === '/banking'}
+						icon={<AccountBalanceIcon />}
+					/>
+					<NavItem
+						to="/reports"
+						text="Reports"
+						isActive={pathname === '/reports'}
+						icon={<AssessmentIcon />}
+					/>
+				</Box>
+				<Box sx={{ mt: 3 }}>
+					<NavSectionHeader title="Management" />
+					<NavItem
+						to="/users"
+						text="Users"
+						isActive={pathname === '/users'}
+						icon={<PersonIcon />}
+					/>
+				</Box>
+			</List>
+		</Box>
+	);
+
+	if (lgUp) {
+		return (
+			<Drawer
+				anchor="left"
+				open
+				PaperProps={{
+					sx: {
+						backgroundColor: 'grey.900',
+						color: '#FFFFFF',
+						width: sidebarMaxWidth,
+					},
+				}}
+				// sx={{
+				// 	width: sidebarMaxWidth,
+				// 	height: '100vh',
+				// 	'& > div': {
+				// 		width: 'inherit',
+				// 	},
+				// }}
+				variant="permanent"
+			>
+				{content}
+			</Drawer>
+		);
+	}
 
 	return (
 		<Drawer
-			variant="permanent"
+			anchor="left"
+			onClose={onClose}
 			open={isOpen}
-			sx={{
-				display: { xs: 'none', lg: 'block' },
-				width: sidebarMaxWidth,
-				height: '100vh',
-				'& > div': {
-					width: 'inherit',
+			PaperProps={{
+				sx: {
+					backgroundColor: 'grey.900',
+					color: '#FFFFFF',
+					width: sidebarMaxWidth,
 				},
 			}}
+			sx={{
+				// width: sidebarMaxWidth,
+				// height: '100vh',
+				// '& > div': {
+				// 	width: 'inherit',
+				// },
+				zIndex: (theme) => theme.zIndex.appBar + 100,
+			}}
+			variant="temporary"
 		>
-			<Box
-				sx={{
-					p: 2,
-				}}
-			>
-				<Toolbar
-					sx={{
-						alignItems: 'center',
-						display: 'flex',
-						justifyContent: 'space-between',
-						px: [2],
-					}}
-				>
-					<Link href="/">MyApp</Link>
-				</Toolbar>
-				<Box sx={{ mb: 2 }}>
-					<Link href="/profile">
-						<ProfileSection />
-					</Link>
-				</Box>
-				<List component="nav">
-					<Box>
-						<NavSectionHeader title="General" />
-						<NavItem
-							to="/"
-							text="Dashboard"
-							isActive={pathname === '/'}
-							icon={<DashboardIcon />}
-						/>
-						<NavItem
-							to="/analytics"
-							text="Analytics"
-							isActive={pathname === '/analytics'}
-							icon={<InsightsIcon />}
-						/>
-						<NavItem
-							to="/banking"
-							text="Banking"
-							isActive={pathname === '/banking'}
-							icon={<AccountBalanceIcon />}
-						/>
-						<NavItem
-							to="/reports"
-							text="Reports"
-							isActive={pathname === '/reports'}
-							icon={<AssessmentIcon />}
-						/>
-					</Box>
-					<Box sx={{ mt: 3 }}>
-						<NavSectionHeader title="Management" />
-						<NavItem
-							to="/users"
-							text="Users"
-							isActive={pathname === '/users'}
-							icon={<PersonIcon />}
-						/>
-					</Box>
-				</List>
-			</Box>
+			{content}
 		</Drawer>
 	);
 };
