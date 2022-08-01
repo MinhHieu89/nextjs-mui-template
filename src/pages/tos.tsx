@@ -1,8 +1,7 @@
-import { Container } from '@mui/material';
 import { NextPage } from 'next';
 
 const TermAndCondition: NextPage = () => {
-	return <Container>Term And Condition</Container>;
+	return <div>Term And Condition</div>;
 };
 
 export default TermAndCondition;
