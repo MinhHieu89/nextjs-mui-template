@@ -1,18 +1,10 @@
-import {
-	Avatar,
-	Box,
-	Drawer,
-	List,
-	Toolbar,
-	Typography,
-	useMediaQuery,
-} from '@mui/material';
+import { Box, Drawer, List, Toolbar, useMediaQuery } from '@mui/material';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import AssessmentIcon from '@mui/icons-material/Assessment';
 import InsightsIcon from '@mui/icons-material/Insights';
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import PersonIcon from '@mui/icons-material/Person';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 
 import { Link } from '../link';
@@ -29,7 +21,6 @@ const sidebarMaxWidth = 280;
 
 const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
 	const router = useRouter();
-	const { pathname } = router;
 	const lgUp = useMediaQuery((theme: any) => theme.breakpoints.up('lg'), {
 		defaultMatches: true,
 		noSsr: false,
@@ -81,25 +72,25 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
 					<NavItem
 						to="/"
 						text="Dashboard"
-						isActive={pathname === '/'}
+						isActive={router.pathname === '/'}
 						icon={<DashboardIcon />}
 					/>
 					<NavItem
 						to="/analytics"
 						text="Analytics"
-						isActive={pathname === '/analytics'}
+						isActive={router.pathname === '/analytics'}
 						icon={<InsightsIcon />}
 					/>
 					<NavItem
 						to="/banking"
 						text="Banking"
-						isActive={pathname === '/banking'}
+						isActive={router.pathname === '/banking'}
 						icon={<AccountBalanceIcon />}
 					/>
 					<NavItem
 						to="/reports"
 						text="Reports"
-						isActive={pathname === '/reports'}
+						isActive={router.pathname === '/reports'}
 						icon={<AssessmentIcon />}
 					/>
 				</Box>
@@ -108,7 +99,7 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
 					<NavItem
 						to="/users"
 						text="Users"
-						isActive={pathname === '/users'}
+						isActive={router.pathname === '/users'}
 						icon={<PersonIcon />}
 					/>
 				</Box>
@@ -124,17 +115,10 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
 				PaperProps={{
 					sx: {
 						backgroundColor: 'grey.900',
-						color: '#FFFFFF',
+						color: '#ffffff',
 						width: sidebarMaxWidth,
 					},
 				}}
-				// sx={{
-				// 	width: sidebarMaxWidth,
-				// 	height: '100vh',
-				// 	'& > div': {
-				// 		width: 'inherit',
-				// 	},
-				// }}
 				variant="permanent"
 			>
 				{content}
@@ -150,16 +134,11 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
 			PaperProps={{
 				sx: {
 					backgroundColor: 'grey.900',
-					color: '#FFFFFF',
+					color: '#ffffff',
 					width: sidebarMaxWidth,
 				},
 			}}
 			sx={{
-				// width: sidebarMaxWidth,
-				// height: '100vh',
-				// '& > div': {
-				// 	width: 'inherit',
-				// },
 				zIndex: (theme) => theme.zIndex.appBar + 100,
 			}}
 			variant="temporary"

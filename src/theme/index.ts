@@ -133,7 +133,7 @@ const theme = createTheme({
 		MuiLink: {
 			defaultProps: {
 				underline: 'none',
-				// color: grey[900],
+				color: 'text.primary',
 			},
 		},
 	},

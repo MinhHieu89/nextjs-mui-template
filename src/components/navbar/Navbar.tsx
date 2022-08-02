@@ -135,12 +135,14 @@ const Navbar = ({ onSidebarOpen }: NavbarProps) => {
 								</ListItemIcon>
 								Settings
 							</MenuItem>
-							<MenuItem>
-								<ListItemIcon>
-									<Logout fontSize="small" />
-								</ListItemIcon>
-								Logout
-							</MenuItem>
+							<Link href="/login">
+								<MenuItem>
+									<ListItemIcon>
+										<Logout fontSize="small" />
+									</ListItemIcon>
+									Logout
+								</MenuItem>
+							</Link>
 						</Box>
 					</Menu>
 				</Stack>
