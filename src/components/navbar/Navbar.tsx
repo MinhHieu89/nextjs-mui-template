@@ -20,6 +20,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 
 import PersonIcon from '@mui/icons-material/Person';
 import { Link } from '../link';
+import { AppUser } from '../../models/AppUser';
 
 const NavbarRoot = styled(AppBar)(({ theme }) => ({
 	backgroundColor: theme.palette.background.paper,
@@ -28,14 +29,19 @@ const NavbarRoot = styled(AppBar)(({ theme }) => ({
 
 interface NavbarProps {
 	onSidebarOpen: () => void;
+	signOut: (params: { redirect: boolean }) => void;
+	user: AppUser;
 }
 
-const Navbar = ({ onSidebarOpen }: NavbarProps) => {
+const Navbar = ({ onSidebarOpen, signOut, user }: NavbarProps) => {
 	const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+
 	const open = Boolean(anchorEl);
+
 	const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
 		setAnchorEl(event.currentTarget);
 	};
+
 	const handleClose = () => {
 		setAnchorEl(null);
 	};
@@ -97,7 +103,10 @@ const Navbar = ({ onSidebarOpen }: NavbarProps) => {
 						aria-expanded={open ? 'true' : undefined}
 						onClick={handleClick}
 					>
-						<Avatar>HB</Avatar>
+						<Avatar
+							alt={user.name as string}
+							src={user.profileImageUrl}
+						/>
 					</Button>
 					<Menu
 						id="basic-menu"
@@ -135,14 +144,14 @@ const Navbar = ({ onSidebarOpen }: NavbarProps) => {
 								</ListItemIcon>
 								Settings
 							</MenuItem>
-							<Link href="/login">
-								<MenuItem>
-									<ListItemIcon>
-										<Logout fontSize="small" />
-									</ListItemIcon>
-									Logout
-								</MenuItem>
-							</Link>
+							<MenuItem
+								onClick={() => signOut({ redirect: false })}
+							>
+								<ListItemIcon>
+									<Logout fontSize="small" />
+								</ListItemIcon>
+								Logout
+							</MenuItem>
 						</Box>
 					</Menu>
 				</Stack>

@@ -18,6 +18,7 @@
     "@mui/material": "latest",
     "formik": "^2.2.9",
     "next": "latest",
+    "next-auth": "^4.10.3",
     "react": "latest",
     "react-dom": "latest",
     "yup": "^0.32.11"

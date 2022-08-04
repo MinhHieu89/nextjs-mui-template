@@ -9,6 +9,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { useRouter } from 'next/router';
 import { Form, Formik } from 'formik';
+import { signIn } from 'next-auth/react';
 import * as Yup from 'yup';
 
 import { Link } from '../components/link';
@@ -36,8 +37,13 @@ const Login: Page = () => {
 		password: Yup.string().required('Password is required.'),
 	});
 
-	const handleSubmit = (values: LoginFormValues) => {
-		console.log(values);
+	const handleSubmit = async ({ email, password }: LoginFormValues) => {
+		await signIn('credentials', {
+			email,
+			password,
+			redirect: false,
+		});
+
 		router.push('/');
 	};
 

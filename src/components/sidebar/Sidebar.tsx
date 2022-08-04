@@ -11,15 +11,17 @@ import { Link } from '../link';
 import NavItem from './NavItem';
 import NavSectionHeader from './NavSectionHeader';
 import ProfileSection from './ProfileSection';
+import { AppUser } from '../../models/AppUser';
 
 interface SidebarProps {
 	isOpen: boolean;
 	onClose: () => void;
+	user: AppUser;
 }
 
 const sidebarMaxWidth = 280;
 
-const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
+const Sidebar = ({ isOpen, onClose, user }: SidebarProps) => {
 	const router = useRouter();
 	const lgUp = useMediaQuery((theme: any) => theme.breakpoints.up('lg'), {
 		defaultMatches: true,
@@ -63,7 +65,7 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
 			</Toolbar>
 			<Box sx={{ mb: 2 }}>
 				<Link href="/profile">
-					<ProfileSection />
+					<ProfileSection user={user} />
 				</Link>
 			</Box>
 			<List component="nav">

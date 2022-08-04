@@ -1,6 +1,11 @@
 import { Box, Avatar, Typography } from '@mui/material';
+import { AppUser } from '../../models/AppUser';
 
-const ProfileSection = () => {
+interface ProfileSectionProps {
+	user: AppUser;
+}
+
+const ProfileSection = ({ user }: ProfileSectionProps) => {
 	return (
 		<Box
 			sx={{
@@ -11,7 +16,7 @@ const ProfileSection = () => {
 				p: 2,
 			}}
 		>
-			<Avatar>HB</Avatar>
+			<Avatar alt={user.name as string} src={user.profileImageUrl} />
 			<Box
 				sx={{
 					ml: 2,
@@ -24,7 +29,7 @@ const ProfileSection = () => {
 						color: 'grey.300',
 					}}
 				>
-					Henry Brown
+					{user.name}
 				</Typography>
 				<Typography
 					sx={{
