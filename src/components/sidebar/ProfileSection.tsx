@@ -16,7 +16,7 @@ const ProfileSection = ({ user }: ProfileSectionProps) => {
 				p: 2,
 			}}
 		>
-			<Avatar alt={user.name as string} src={user.profileImageUrl} />
+			<Avatar alt={user.name as string} src={user.image as string} />
 			<Box
 				sx={{
 					ml: 2,

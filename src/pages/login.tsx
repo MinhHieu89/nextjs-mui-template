@@ -6,6 +6,7 @@ import Checkbox from '@mui/material/Checkbox';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import GoogleIcon from '@mui/icons-material/Google';
 import Typography from '@mui/material/Typography';
 import { Form, Formik } from 'formik';
 import { signIn } from 'next-auth/react';
@@ -56,7 +57,7 @@ const Login: Page = () => {
 				<LockOutlinedIcon />
 			</Avatar>
 			<Typography component="h1" variant="h5">
-				Sign in
+				Hello Again!
 			</Typography>
 			<Formik
 				initialValues={initialValues}
@@ -72,7 +73,6 @@ const Login: Page = () => {
 						label="Email Address"
 						name="email"
 						autoComplete="email"
-						autoFocus
 					/>
 					<TextField
 						margin="normal"
@@ -92,9 +92,20 @@ const Login: Page = () => {
 						type="submit"
 						fullWidth
 						variant="contained"
-						sx={{ my: 3 }}
+						sx={{ mt: 3 }}
 					>
-						Sign In
+						Login
+					</Button>
+					<Button
+						onClick={() => signIn('google')}
+						type="button"
+						fullWidth
+						variant="outlined"
+						disableRipple
+						sx={{ mt: 2, mb: 3 }}
+						startIcon={<GoogleIcon />}
+					>
+						Sign In with Google
 					</Button>
 					<Grid container>
 						<Grid item xs>

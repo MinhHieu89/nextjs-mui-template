@@ -1,11 +1,19 @@
 import NextAuth, { NextAuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
+import GoogleProvider from 'next-auth/providers/google';
+import { MongoDBAdapter } from '@next-auth/mongodb-adapter';
+import clientPromise from '../../../lib/mongodb';
 
 const authOptions: NextAuthOptions = {
+	adapter: MongoDBAdapter(clientPromise),
 	session: {
 		strategy: 'jwt',
 	},
 	providers: [
+		GoogleProvider({
+			clientId: process.env.GOOGLE_CLIENT_ID as string,
+			clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+		}),
 		CredentialsProvider({
 			type: 'credentials',
 			credentials: {},
@@ -31,6 +39,7 @@ const authOptions: NextAuthOptions = {
 	pages: {
 		signIn: '/login',
 	},
+	secret: process.env.JWT_SECRET,
 };
 
 export default NextAuth(authOptions);
