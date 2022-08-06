@@ -1,11 +1,32 @@
 import { Box } from '@mui/material';
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
+import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/router';
+
+import { Loading } from '../loading';
 
 interface AuthLayoutProps {
 	children: React.ReactNode;
 }
 
 const AuthLayout = ({ children }: AuthLayoutProps) => {
+	const { status } = useSession();
+	const router = useRouter();
+
+	useEffect(() => {
+		if (status !== 'authenticated') return;
+
+		if (router.query && router.query.returnUrl) {
+			router.replace(router.query.returnUrl as string);
+		} else {
+			router.replace('/');
+		}
+	}, [status, router]);
+
+	if (status === 'loading' || status === 'authenticated') {
+		return <Loading />;
+	}
+
 	return (
 		<Box
 			sx={{

@@ -105,7 +105,7 @@ const Navbar = ({ onSidebarOpen, signOut, user }: NavbarProps) => {
 					>
 						<Avatar
 							alt={user.name as string}
-							src={user.profileImageUrl}
+							src={user.image as string}
 						/>
 					</Button>
 					<Menu

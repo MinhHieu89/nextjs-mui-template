@@ -7,7 +7,6 @@ import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
-import { useRouter } from 'next/router';
 import { Form, Formik } from 'formik';
 import { signIn } from 'next-auth/react';
 import * as Yup from 'yup';
@@ -23,8 +22,6 @@ interface LoginFormValues {
 }
 
 const Login: Page = () => {
-	const router = useRouter();
-
 	const initialValues: LoginFormValues = {
 		email: '',
 		password: '',
@@ -43,8 +40,6 @@ const Login: Page = () => {
 			password,
 			redirect: false,
 		});
-
-		router.push('/');
 	};
 
 	return (
@@ -57,7 +52,7 @@ const Login: Page = () => {
 				maxWidth: '480px',
 			}}
 		>
-			<Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+			<Avatar sx={{ m: 1, backgroundColor: 'secondary.main' }}>
 				<LockOutlinedIcon />
 			</Avatar>
 			<Typography component="h1" variant="h5">

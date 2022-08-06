@@ -1,10 +1,10 @@
 import { Box, styled } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useSession, signOut } from 'next-auth/react';
+import { useRouter } from 'next/router';
 
 import { Navbar } from '../navbar';
 import { Sidebar } from '../sidebar';
-import { useRouter } from 'next/router';
 import { Loading } from '../loading';
 import { AppUser } from '../../models/AppUser';
 
@@ -28,9 +28,14 @@ const AppLayout = ({ children }: AppLayoutProps) => {
 	const [isSidebarOpen, setSidebarOpen] = useState(true);
 
 	useEffect(() => {
-		if (status === 'unauthenticated') {
-			router.replace('/login');
-		}
+		if (status !== 'unauthenticated') return;
+
+		router.push({
+			pathname: '/login',
+			query: {
+				returnUrl: router.pathname,
+			},
+		});
 	}, [status, router]);
 
 	if (!session) return <Loading />;
