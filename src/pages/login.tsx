@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useState } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import FormControlLabel from '@mui/material/FormControlLabel';
@@ -14,7 +14,7 @@ import * as Yup from 'yup';
 
 import { Link } from '../components/link';
 import { AuthLayout } from '../components/layout';
-import { Paper } from '@mui/material';
+import { Alert, Paper } from '@mui/material';
 import { TextField } from '../components/form';
 
 interface LoginFormValues {
@@ -23,6 +23,8 @@ interface LoginFormValues {
 }
 
 const Login: Page = () => {
+	const [errorMessage, setErrorMessage] = useState('');
+
 	const initialValues: LoginFormValues = {
 		email: '',
 		password: '',
@@ -36,11 +38,17 @@ const Login: Page = () => {
 	});
 
 	const handleSubmit = async ({ email, password }: LoginFormValues) => {
-		await signIn('credentials', {
+		setErrorMessage('');
+
+		const res = await signIn('credentials', {
 			email,
 			password,
 			redirect: false,
 		});
+
+		if (res?.error) {
+			setErrorMessage(res.error);
+		}
 	};
 
 	return (
@@ -59,6 +67,17 @@ const Login: Page = () => {
 			<Typography component="h1" variant="h5">
 				Hello Again!
 			</Typography>
+			{errorMessage && (
+				<Alert
+					sx={{
+						width: '100%',
+						mt: 2,
+					}}
+					severity="error"
+				>
+					{errorMessage}
+				</Alert>
+			)}
 			<Formik
 				initialValues={initialValues}
 				validationSchema={validate}

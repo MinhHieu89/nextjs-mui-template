@@ -2,7 +2,11 @@ import NextAuth, { NextAuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import GoogleProvider from 'next-auth/providers/google';
 import { MongoDBAdapter } from '@next-auth/mongodb-adapter';
+import { compare } from 'bcrypt';
+
 import clientPromise from '../../../lib/mongodb';
+import dbConnect from '../../../lib/dbConnect';
+import User from '../../../models/User';
 
 const authOptions: NextAuthOptions = {
 	adapter: MongoDBAdapter(clientPromise),
@@ -17,22 +21,30 @@ const authOptions: NextAuthOptions = {
 		CredentialsProvider({
 			type: 'credentials',
 			credentials: {},
-			authorize(credentials, req) {
+			async authorize(credentials) {
+				await dbConnect();
+
 				const { email, password } = credentials as {
 					email: string;
 					password: string;
 				};
 
-				// find user from database here
-				if (email !== 'admin@gmail.com' || password !== '123qwe') {
-					throw new Error('Incorrect email or password.');
+				const user = await User.findOne({ email });
+
+				if (!user || !user.password) {
+					throw new Error('You have not registered yet.');
 				}
 
-				return {
-					id: 1234,
-					name: 'John Doe',
-					email: 'admin@gmail.com',
-				};
+				const isPasswordCorrect = await compare(
+					password,
+					user.password
+				);
+
+				if (!isPasswordCorrect) {
+					throw new Error('Email or password is incorrect.');
+				}
+
+				return user;
 			},
 		}),
 	],
