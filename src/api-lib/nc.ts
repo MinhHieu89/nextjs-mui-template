@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { UserFriendlyError } from '../models/userFriendlyError';
+import { UserFriendlyError } from '@/models/userFriendlyError';
 
 export const ncOpts = {
 	onError(err: any, req: NextApiRequest, res: NextApiResponse) {

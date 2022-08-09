@@ -4,9 +4,9 @@ import GoogleProvider from 'next-auth/providers/google';
 import { MongoDBAdapter } from '@next-auth/mongodb-adapter';
 import { compare } from 'bcrypt';
 
-import clientPromise from '../../../api-lib/mongodb';
-import dbConnect from '../../../api-lib/dbConnect';
-import User from '../../../api-lib/db/user';
+import clientPromise from '@/api-lib/mongodb';
+import dbConnect from '@/api-lib/dbConnect';
+import User from '@/api-lib/db/user';
 
 const authOptions: NextAuthOptions = {
 	adapter: MongoDBAdapter(clientPromise),

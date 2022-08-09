@@ -13,12 +13,12 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { Form, Formik } from 'formik';
 import * as Yup from 'yup';
 
-import { Link } from '../components/link';
+import { Link } from '@/components/link';
 import React, { useState } from 'react';
-import { AuthLayout } from '../components/layout';
-import { TextField } from '../components/form';
-import { SignUpInput } from '../models/signUpInput';
-import authService from '../services/auth';
+import { AuthLayout } from '@/components/layout';
+import { TextField } from '@/components/form';
+import { SignUpInput } from '@/models/signUpInput';
+import authService from '@/services/auth';
 import { useRouter } from 'next/router';
 
 const Register: Page = () => {

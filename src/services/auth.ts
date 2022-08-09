@@ -1,5 +1,5 @@
-import { SignUpInput } from '../models/signUpInput';
-import axiosClient from '../api/axiosClient';
+import { SignUpInput } from '@/models/signUpInput';
+import axiosClient from '@/lib/axiosClient';
 
 class AuthService {
 	async signUp(input: SignUpInput) {

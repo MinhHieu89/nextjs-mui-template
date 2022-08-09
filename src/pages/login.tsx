@@ -12,10 +12,10 @@ import { Form, Formik } from 'formik';
 import { signIn } from 'next-auth/react';
 import * as Yup from 'yup';
 
-import { Link } from '../components/link';
-import { AuthLayout } from '../components/layout';
+import { Link } from '@/components/link';
+import { AuthLayout } from '@/components/layout';
 import { Alert, Paper } from '@mui/material';
-import { TextField } from '../components/form';
+import { TextField } from '@/components/form';
 
 interface LoginFormValues {
 	email: string;
