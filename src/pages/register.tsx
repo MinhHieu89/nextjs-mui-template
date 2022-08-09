@@ -7,25 +7,26 @@ import {
 	FormControlLabel,
 	Checkbox,
 	Button,
+	Alert,
 } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { Form, Formik } from 'formik';
 import * as Yup from 'yup';
 
 import { Link } from '../components/link';
-import React from 'react';
+import React, { useState } from 'react';
 import { AuthLayout } from '../components/layout';
 import { TextField } from '../components/form';
-
-interface RegisterFormValues {
-	firstName: string;
-	lastName: string;
-	email: string;
-	password: string;
-}
+import { SignUpInput } from '../models/signUpInput';
+import authService from '../services/auth';
+import { useRouter } from 'next/router';
 
 const Register: Page = () => {
-	const initialValues: RegisterFormValues = {
+	const router = useRouter();
+	const [isLoading, setIsLoading] = useState(false);
+	const [errorMessage, setErrorMessage] = useState('');
+
+	const initialValues: SignUpInput = {
 		firstName: '',
 		lastName: '',
 		email: '',
@@ -41,8 +42,20 @@ const Register: Page = () => {
 		password: Yup.string().required('Password is required.'),
 	});
 
-	const handleSubmit = (values: RegisterFormValues) => {
-		console.log(values);
+	const handleSubmit = async (values: SignUpInput) => {
+		setErrorMessage('');
+		setIsLoading(true);
+
+		try {
+			await authService.signUp(values);
+			router.push('/login');
+		} catch (err: any) {
+			if (err?.data?.error?.message) {
+				setErrorMessage(err?.data?.error?.message as string);
+			}
+		} finally {
+			setIsLoading(false);
+		}
 	};
 
 	return (
@@ -61,6 +74,17 @@ const Register: Page = () => {
 			<Typography component="h1" variant="h5">
 				Sign up
 			</Typography>
+			{errorMessage && (
+				<Alert
+					sx={{
+						width: '100%',
+						mt: 2,
+					}}
+					severity="error"
+				>
+					{errorMessage}
+				</Alert>
+			)}
 			<Formik
 				initialValues={initialValues}
 				validationSchema={validate}
