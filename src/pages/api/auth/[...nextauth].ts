@@ -5,8 +5,9 @@ import { MongoDBAdapter } from '@next-auth/mongodb-adapter';
 import { compare } from 'bcrypt';
 
 import clientPromise from '@/api-lib/mongodb';
+import { findUserByEmail } from '@/api-lib/db/user';
 import dbConnect from '@/api-lib/dbConnect';
-import User from '@/api-lib/db/user';
+import { LoginInput } from '@/schema/auth';
 
 const authOptions: NextAuthOptions = {
 	adapter: MongoDBAdapter(clientPromise),
@@ -24,15 +25,17 @@ const authOptions: NextAuthOptions = {
 			async authorize(credentials) {
 				await dbConnect();
 
-				const { email, password } = credentials as {
-					email: string;
-					password: string;
-				};
+				const { email, password } = credentials as LoginInput;
 
-				const user = await User.findOne({ email });
+				const user = await findUserByEmail(email);
 
-				if (!user || !user.password) {
+				if (!user) {
 					throw new Error('You have not registered yet.');
+				}
+
+				// Registered with Gmail
+				if (!user.password) {
+					throw new Error('Email or password is incorrect.');
 				}
 
 				const isPasswordCorrect = await compare(

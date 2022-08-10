@@ -1,8 +1,7 @@
 import { useState } from 'react';
 import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
+import { LoadingButton } from '@mui/lab';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
@@ -16,18 +15,17 @@ import { Link } from '@/components/link';
 import { AuthLayout } from '@/components/layout';
 import { Alert, Paper } from '@mui/material';
 import { TextField } from '@/components/form';
-
-interface LoginFormValues {
-	email: string;
-	password: string;
-}
+import { LoginInput } from '@/schema/auth';
+import { CheckboxField } from '@/components/form';
 
 const Login: Page = () => {
+	const [isLoading, setIsLoading] = useState(false);
 	const [errorMessage, setErrorMessage] = useState('');
 
-	const initialValues: LoginFormValues = {
+	const initialValues: LoginInput = {
 		email: '',
 		password: '',
+		rememberMe: false,
 	};
 
 	const validate = Yup.object({
@@ -37,8 +35,11 @@ const Login: Page = () => {
 		password: Yup.string().required('Password is required.'),
 	});
 
-	const handleSubmit = async ({ email, password }: LoginFormValues) => {
+	const handleSubmit = async (input: LoginInput) => {
 		setErrorMessage('');
+		setIsLoading(true);
+
+		const { email, password } = input;
 
 		const res = await signIn('credentials', {
 			email,
@@ -49,6 +50,8 @@ const Login: Page = () => {
 		if (res?.error) {
 			setErrorMessage(res.error);
 		}
+
+		setIsLoading(false);
 	};
 
 	return (
@@ -92,6 +95,7 @@ const Login: Page = () => {
 						label="Email Address"
 						name="email"
 						autoComplete="email"
+						autoFocus
 					/>
 					<TextField
 						margin="normal"
@@ -104,28 +108,36 @@ const Login: Page = () => {
 						autoComplete="current-password"
 					/>
 					<FormControlLabel
-						control={<Checkbox value="remember" color="primary" />}
+						control={
+							<CheckboxField
+								name="rememberMe"
+								id="rememberMe"
+								color="primary"
+							/>
+						}
 						label="Remember me"
 					/>
-					<Button
+					<LoadingButton
 						type="submit"
 						fullWidth
 						variant="contained"
+						loading={isLoading}
 						sx={{ mt: 3 }}
 					>
 						Login
-					</Button>
-					<Button
+					</LoadingButton>
+					<LoadingButton
 						onClick={() => signIn('google')}
 						type="button"
 						fullWidth
 						variant="outlined"
 						disableRipple
+						disabled={isLoading}
 						sx={{ mt: 2, mb: 3 }}
 						startIcon={<GoogleIcon />}
 					>
 						Sign In with Google
-					</Button>
+					</LoadingButton>
 					<Grid container>
 						<Grid item xs>
 							<Link href="#" variant="body2" underline="always">

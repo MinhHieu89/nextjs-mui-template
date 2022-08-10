@@ -6,9 +6,9 @@ import {
 	Grid,
 	FormControlLabel,
 	Checkbox,
-	Button,
 	Alert,
 } from '@mui/material';
+import { LoadingButton } from '@mui/lab';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { Form, Formik } from 'formik';
 import * as Yup from 'yup';
@@ -17,12 +17,13 @@ import { Link } from '@/components/link';
 import React, { useState } from 'react';
 import { AuthLayout } from '@/components/layout';
 import { TextField } from '@/components/form';
-import { SignUpInput } from '@/models/signUpInput';
 import authService from '@/services/auth';
 import { useRouter } from 'next/router';
+import { SignUpInput } from '@/schema/auth';
 
 const Register: Page = () => {
 	const router = useRouter();
+	const [agree, setAgree] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
 	const [errorMessage, setErrorMessage] = useState('');
 
@@ -138,7 +139,8 @@ const Register: Page = () => {
 							<FormControlLabel
 								control={
 									<Checkbox
-										value="allowExtraEmails"
+										value={agree}
+										onChange={() => setAgree(!agree)}
 										color="primary"
 									/>
 								}
@@ -154,14 +156,16 @@ const Register: Page = () => {
 							/>
 						</Grid>
 					</Grid>
-					<Button
+					<LoadingButton
 						type="submit"
 						fullWidth
 						variant="contained"
+						disabled={!agree}
+						loading={isLoading}
 						sx={{ my: 3 }}
 					>
 						Sign Up
-					</Button>
+					</LoadingButton>
 					<Grid container justifyContent="flex-end">
 						<Grid item>
 							<Link

@@ -1,6 +1,5 @@
-import { SignUpInput } from '@/models/signUpInput';
 import { createUser } from '@/api-lib/db/user';
-import { SignUpInputSchema } from '@/schema/auth';
+import { SignUpInput, SignUpInputSchema } from '@/schema/auth';
 import { validateBody } from '@/api-lib/middlewares/validation';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import nc from 'next-connect';

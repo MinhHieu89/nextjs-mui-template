@@ -15,6 +15,7 @@
     "@emotion/server": "latest",
     "@emotion/styled": "latest",
     "@mui/icons-material": "latest",
+    "@mui/lab": "^5.0.0-alpha.94",
     "@mui/material": "latest",
     "@next-auth/mongodb-adapter": "^1.0.4",
     "ajv": "^8.11.0",

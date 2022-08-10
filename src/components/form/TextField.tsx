@@ -1,7 +1,7 @@
 import { useField } from 'formik';
 import MuiTextField from '@mui/material/TextField';
 
-const TextField = (props: any) => {
+const TextField = (props: any): JSX.Element => {
 	const [field, meta] = useField(props);
 
 	return (
