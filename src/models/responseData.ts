@@ -1,4 +1,5 @@
 export interface ResponseData {
+	data?: any;
 	success: boolean;
 	error?: {
 		message?: string;

@@ -54,3 +54,14 @@ export const createUser = async (input: SignUpInput) => {
 
 	await newUser.save();
 };
+
+export const getUsers = async () => {
+	const users = await User.find({}).select({
+		_id: 1,
+		name: 1,
+		email: 1,
+		image: 1,
+	});
+
+	return users;
+};
