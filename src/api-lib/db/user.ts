@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
-import { SignUpInput } from '../../models/signUpInput';
 import { UserFriendlyError } from '../../models/userFriendlyError';
+import { SignUpInput } from '@/schema/auth';
 
 const Schema = mongoose.Schema;
 

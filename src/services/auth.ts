@@ -1,5 +1,5 @@
-import { SignUpInput } from '@/models/signUpInput';
 import axiosClient from '@/lib/axiosClient';
+import { SignUpInput } from '@/schema/auth';
 
 class AuthService {
 	async signUp(input: SignUpInput) {
