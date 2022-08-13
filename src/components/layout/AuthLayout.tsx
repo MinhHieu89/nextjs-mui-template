@@ -19,7 +19,7 @@ const AuthLayout = ({ children }: AuthLayoutProps) => {
 		if (router.query && router.query.returnUrl) {
 			router.replace(router.query.returnUrl as string);
 		} else {
-			router.replace('/');
+			router.replace('/app/dashboard');
 		}
 	}, [status, router]);
 

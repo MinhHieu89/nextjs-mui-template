@@ -9,7 +9,7 @@ import { findUserByEmail } from '@/api-lib/db/user';
 import dbConnect from '@/api-lib/dbConnect';
 import { LoginInput } from '@/schema/auth';
 
-const authOptions: NextAuthOptions = {
+export const authOptions: NextAuthOptions = {
 	adapter: MongoDBAdapter(clientPromise),
 	session: {
 		strategy: 'jwt',
@@ -54,7 +54,7 @@ const authOptions: NextAuthOptions = {
 	pages: {
 		signIn: '/login',
 	},
-	secret: process.env.JWT_SECRET,
+	secret: process.env.NEXTAUTH_SECRET,
 };
 
 export default NextAuth(authOptions);

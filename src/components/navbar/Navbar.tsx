@@ -123,7 +123,7 @@ const Navbar = ({ onSidebarOpen, signOut, user }: NavbarProps) => {
 								maxWidth: '100%',
 							}}
 						>
-							<Link href="/profile">
+							<Link href="/app/profile">
 								<MenuItem>
 									<ListItemIcon>
 										<PersonIcon fontSize="small" />

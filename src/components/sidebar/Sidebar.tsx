@@ -1,9 +1,4 @@
 import { Box, Drawer, List, Toolbar, useMediaQuery } from '@mui/material';
-import DashboardIcon from '@mui/icons-material/Dashboard';
-import AssessmentIcon from '@mui/icons-material/Assessment';
-import InsightsIcon from '@mui/icons-material/Insights';
-import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
-import PersonIcon from '@mui/icons-material/Person';
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 
@@ -12,6 +7,7 @@ import NavItem from './NavItem';
 import NavSectionHeader from './NavSectionHeader';
 import ProfileSection from './ProfileSection';
 import { AppUser } from '../../models/AppUser';
+import menu from './menu';
 
 interface SidebarProps {
 	isOpen: boolean;
@@ -64,47 +60,25 @@ const Sidebar = ({ isOpen, onClose, user }: SidebarProps) => {
 				</Link>
 			</Toolbar>
 			<Box sx={{ mb: 2 }}>
-				<Link href="/profile">
+				<Link href="/app/profile">
 					<ProfileSection user={user} />
 				</Link>
 			</Box>
 			<List component="nav">
-				<Box>
-					<NavSectionHeader title="General" />
-					<NavItem
-						to="/"
-						text="Dashboard"
-						isActive={router.pathname === '/'}
-						icon={<DashboardIcon />}
-					/>
-					<NavItem
-						to="/analytics"
-						text="Analytics"
-						isActive={router.pathname === '/analytics'}
-						icon={<InsightsIcon />}
-					/>
-					<NavItem
-						to="/banking"
-						text="Banking"
-						isActive={router.pathname === '/banking'}
-						icon={<AccountBalanceIcon />}
-					/>
-					<NavItem
-						to="/reports"
-						text="Reports"
-						isActive={router.pathname === '/reports'}
-						icon={<AssessmentIcon />}
-					/>
-				</Box>
-				<Box sx={{ mt: 3 }}>
-					<NavSectionHeader title="Management" />
-					<NavItem
-						to="/users"
-						text="Users"
-						isActive={router.pathname === '/users'}
-						icon={<PersonIcon />}
-					/>
-				</Box>
+				{menu.map(({ title, items }) => (
+					<Box key={title} sx={{ mb: 3 }}>
+						<NavSectionHeader title={title} />
+						{items.map(({ path, displayText, icon }) => (
+							<NavItem
+								key={path}
+								to={path}
+								text={displayText}
+								isActive={router.pathname === path}
+								icon={icon}
+							/>
+						))}
+					</Box>
+				))}
 			</List>
 		</Box>
 	);
