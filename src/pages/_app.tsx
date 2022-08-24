@@ -9,19 +9,16 @@ import { SessionProvider } from 'next-auth/react';
 import theme from '../theme';
 import createEmotionCache from '../helpers/createEmotionCache';
 import { AppLayout } from '@/components/layout';
+import { NextPageWithLayout } from './page';
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
 
-type MyAppProps<P = {}> = AppProps<P> & {
-  Component: Page<P>;
+interface MyAppProps extends AppProps {
+  Component: NextPageWithLayout;
   emotionCache?: EmotionCache;
   session: any;
-};
-
-const defaultGetLayout: GetLayout = (
-  page: React.ReactNode
-): React.ReactNode => <AppLayout>{page}</AppLayout>;
+}
 
 export default function MyApp(props: MyAppProps) {
   const {
@@ -31,7 +28,8 @@ export default function MyApp(props: MyAppProps) {
     session,
   } = props;
 
-  const getLayout = Component.getLayout ?? defaultGetLayout;
+  const getLayout =
+    Component.getLayout || ((page) => <AppLayout>{page}</AppLayout>);
 
   return (
     <CacheProvider value={emotionCache}>

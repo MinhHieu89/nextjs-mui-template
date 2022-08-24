@@ -20,8 +20,9 @@ import { TextField } from '@/components/form';
 import authService from '@/services/auth';
 import { useRouter } from 'next/router';
 import { SignUpInput } from '@/schema/auth';
+import { NextPageWithLayout } from './page';
 
-const Register: Page = () => {
+const Register: NextPageWithLayout = () => {
   const router = useRouter();
   const [agree, setAgree] = useState(false);
   const [isLoading, setIsLoading] = useState(false);

@@ -1,6 +1,7 @@
 import { PublicLayout } from '../components/layout';
+import { NextPageWithLayout } from './page';
 
-const TermAndCondition: Page = () => {
+const TermAndCondition: NextPageWithLayout = () => {
   return <div>Term And Condition</div>;
 };
 

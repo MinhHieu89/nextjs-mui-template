@@ -1,7 +1,8 @@
 import { Link } from '@/components/link';
 import React from 'react';
+import { NextPageWithLayout } from './page';
 
-const Home: Page = () => {
+const Home: NextPageWithLayout = () => {
   return (
     <div>
       <h1>Home</h1>

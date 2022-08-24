@@ -17,8 +17,9 @@ import { Alert, Paper } from '@mui/material';
 import { TextField } from '@/components/form';
 import { LoginInput } from '@/schema/auth';
 import { CheckboxField } from '@/components/form';
+import { NextPageWithLayout } from './page';
 
-const Login: Page = () => {
+const Login: NextPageWithLayout = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 

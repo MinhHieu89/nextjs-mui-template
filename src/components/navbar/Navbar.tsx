@@ -21,6 +21,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import PersonIcon from '@mui/icons-material/Person';
 import { Link } from '../link';
 import { AppUser } from '../../models/AppUser';
+import { signOut } from 'next-auth/react';
 
 const NavbarRoot = styled(AppBar)(({ theme }) => ({
   backgroundColor: theme.palette.background.paper,
@@ -29,7 +30,7 @@ const NavbarRoot = styled(AppBar)(({ theme }) => ({
 
 interface NavbarProps {
   onSidebarOpen: () => void;
-  signOut: (params: { redirect: boolean }) => void;
+  signOut: typeof signOut;
   user: AppUser;
 }
 

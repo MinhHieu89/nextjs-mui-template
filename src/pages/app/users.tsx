@@ -7,8 +7,9 @@ import { Avatar, Box, Paper, Typography } from '@mui/material';
 
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
+import { NextPageWithLayout } from 'pages/page';
 
-const Users: Page = () => {
+const Users: NextPageWithLayout = () => {
   const gridOptions: GridOptions<UserListDto> = useMemo(
     () => ({
       columnDefs: [

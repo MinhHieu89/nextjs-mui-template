@@ -15,6 +15,7 @@ const MONGODB_URI: string = process.env.MONGODB_URI;
  * in development. This prevents connections growing exponentially
  * during API Route usage.
  */
+// eslint-disable-next-line no-undef
 let globalWithMongoose = global as typeof globalThis & {
   mongoose: any;
 };
