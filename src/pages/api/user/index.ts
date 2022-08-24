@@ -9,14 +9,14 @@ import { ResponseData } from '@/models/responseData';
 const handler = nc(ncOpts);
 
 handler.get(async (req: NextApiRequest, res: NextApiResponse<ResponseData>) => {
-	await dbConnect();
+  await dbConnect();
 
-	const users = await getUsers();
+  const users = await getUsers();
 
-	return res.status(200).json({
-		data: users,
-		success: true,
-	});
+  return res.status(200).json({
+    data: users,
+    success: true,
+  });
 });
 
 export default handler;

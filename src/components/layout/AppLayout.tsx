@@ -9,64 +9,64 @@ import { Loading } from '../loading';
 import { AppUser } from '../../models/AppUser';
 
 const AppLayoutRoot = styled('div')(({ theme }) => ({
-	display: 'flex',
-	flex: '1 1 auto',
-	maxWidth: '100%',
-	paddingTop: 64,
-	[theme.breakpoints.up('lg')]: {
-		paddingLeft: 280,
-	},
+  display: 'flex',
+  flex: '1 1 auto',
+  maxWidth: '100%',
+  paddingTop: 64,
+  [theme.breakpoints.up('lg')]: {
+    paddingLeft: 280,
+  },
 }));
 
 interface AppLayoutProps {
-	children: React.ReactNode;
+  children: React.ReactNode;
 }
 
 const AppLayout = ({ children }: AppLayoutProps) => {
-	const { data: session, status } = useSession();
-	const router = useRouter();
-	const [isSidebarOpen, setSidebarOpen] = useState(true);
+  const { data: session, status } = useSession();
+  const router = useRouter();
+  const [isSidebarOpen, setSidebarOpen] = useState(true);
 
-	useEffect(() => {
-		if (status !== 'unauthenticated') return;
+  useEffect(() => {
+    if (status !== 'unauthenticated') return;
 
-		router.push({
-			pathname: '/login',
-			query: {
-				returnUrl: router.pathname,
-			},
-		});
-	}, [status, router]);
+    router.push({
+      pathname: '/login',
+      query: {
+        returnUrl: router.pathname,
+      },
+    });
+  }, [status, router]);
 
-	if (!session) return <Loading />;
+  if (!session) return <Loading />;
 
-	return (
-		<>
-			<AppLayoutRoot>
-				<Box
-					sx={{
-						display: 'flex',
-						flex: '1 1 auto',
-						flexDirection: 'column',
-						width: '100%',
-						p: 3,
-					}}
-				>
-					{children}
-				</Box>
-			</AppLayoutRoot>
-			<Navbar
-				onSidebarOpen={() => setSidebarOpen(true)}
-				user={session.user as AppUser}
-				signOut={signOut}
-			/>
-			<Sidebar
-				user={session.user as AppUser}
-				isOpen={isSidebarOpen}
-				onClose={() => setSidebarOpen(false)}
-			/>
-		</>
-	);
+  return (
+    <>
+      <AppLayoutRoot>
+        <Box
+          sx={{
+            display: 'flex',
+            flex: '1 1 auto',
+            flexDirection: 'column',
+            width: '100%',
+            p: 3,
+          }}
+        >
+          {children}
+        </Box>
+      </AppLayoutRoot>
+      <Navbar
+        onSidebarOpen={() => setSidebarOpen(true)}
+        user={session.user as AppUser}
+        signOut={signOut}
+      />
+      <Sidebar
+        user={session.user as AppUser}
+        isOpen={isSidebarOpen}
+        onClose={() => setSidebarOpen(false)}
+      />
+    </>
+  );
 };
 
 export default AppLayout;

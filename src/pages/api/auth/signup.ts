@@ -11,13 +11,13 @@ import { ResponseData } from '@/models/responseData';
 const handler = nc(ncOpts);
 
 handler.post(
-	validateBody(SignUpInputSchema),
-	async (req: NextApiRequest, res: NextApiResponse<ResponseData>) => {
-		await dbConnect();
+  validateBody(SignUpInputSchema),
+  async (req: NextApiRequest, res: NextApiResponse<ResponseData>) => {
+    await dbConnect();
 
-		await createUser(req.body as SignUpInput);
-		res.status(200).json({ success: true });
-	}
+    await createUser(req.body as SignUpInput);
+    res.status(200).json({ success: true });
+  }
 );
 
 export default handler;
